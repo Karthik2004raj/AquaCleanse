@@ -1,4 +1,4 @@
-
+#this model is for mutilabel image classiication for  a hardware based project
 from flask import Flask
 from database import get_users_collection,get_admins_collection, get_canal_data_collection
 
