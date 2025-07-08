@@ -1,3 +1,9 @@
+# Additional comments for clarity and learning:
+# This script demonstrates transfer learning, which means using a pre-trained model (ResNet50) as a starting point for your own task.
+# Data augmentation is used to artificially increase the diversity of the training dataset, helping the model generalize better.
+# The model is trained in two phases: first with most layers frozen (to preserve learned features), then with more layers unfrozen (fine-tuning).
+# The use of callbacks like EarlyStopping and ReduceLROnPlateau helps prevent overfitting and makes training more efficient.
+# The final model is saved to disk for later use in predictions or deployment.
 # This script trains a Convolutional Neural Network (CNN) for multi-label image classification using Keras and TensorFlow.
 # It uses transfer learning with ResNet50, data augmentation, and includes best practices for training and evaluation.
 #optimised version uses cnn-rnn with spatial lstm for multilabel image classification
