@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Date and Canal | AquaClense</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        :root {
+            --primary: rgba(17, 24, 39, 1);
+            --secondary: #00BCD4;
+            --light: #ECEFF1;
+            --dark: #263238;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            background-color: var(--primary);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .logo {
+            color: white;
+            font-weight: 600;
+            font-size: 1.7rem;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px var(--shadow);
+            max-width: 700px;
+            width: 90%;
+            margin: auto;
+            transition: 0.3s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .datepicker-container, .select-container {
+            margin: 25px 0;
+        }
+
+        #datepicker {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: var(--light);
+            font-size: 1rem;
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+
+        select, button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-top: 12px;
+            transition: 0.3s;
+        }
+
+        select {
+            display: none;
+            background: white;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+            display: none;
+        }
+
+        button:hover {
+            background-color: #00ACC1;
+            transform: scale(1.03);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="logo">Aqua<span>Clense</span></a>
+    </div>
+    
+    <div class="container">
+        <h1>Select a Date and Canal</h1>
+        
+        <form method="POST" action="{{ url_for('reports') }}">
+            <div class="datepicker-container">
+                <div id="datepicker"></div>
+                <input type="hidden" name="date" id="date-input">
+            </div>
+            
+            <div class="select-container">
+                <select name="canal" id="canal-select">
+                    <option value="Canal A">Canal A</option>
+                    <option value="Canal B">Canal B</option>
+                    <option value="Canal C">Canal C</option>
+                </select>
+            </div>
+            
+            <button type="submit" id="submit-btn">View Report</button>
+        </form>
+        
+        <a href="{{ url_for('dashboard') }}" class="back-link">Back to Dashboard</a>
+    </div>
+    
+    <script>
+    $(function() {
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: function(dateText) {
+                $("#date-input").val(dateText);
+                $("#canal-select").slideDown(300);
+                $("#submit-btn").fadeIn(300);
+            }
+        });
+
+        $("#canal-select").change(function() {
+            $("#submit-btn").fadeIn(300);
+        });
+    });
+    </script>
+</body>
+</html>

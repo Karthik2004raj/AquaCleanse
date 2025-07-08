@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome | Smart Waste Management</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      height: 100vh;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      padding: 20px;
+      display: flex;
+      justify-content: flex-end;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .header a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      background-color: #ff5722;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+    .header a:hover {
+      background-color: #e64a19;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .content h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+    .content p {
+      font-size: 20px;
+      max-width: 700px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+  </div>
+
+  <div class="content">
+    <h1>Unveil the Reality</h1>
+    <p>Join us to explore how smart technology transforms waste into opportunity.  
+      Login to witness the future of sustainability.
+    </p>
+  </div>
+</body>
+</html>

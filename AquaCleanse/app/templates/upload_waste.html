@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Waste Images</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #16a085;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .upload-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .upload-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 700px;
+            position: relative;
+        }
+        
+        .upload-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .upload-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        .alert {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+        }
+        
+        .alert-success {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #27ae60;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.2);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232c3e50' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+        
+        .file-upload {
+            position: relative;
+            display: block;
+            background-color: var(--light);
+            border: 2px dashed #bdc3c7;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--accent);
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .file-upload p {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .file-upload small {
+            color: #7f8c8d;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-submit:hover {
+            background-color: #1abc9c;
+        }
+        
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: var(--accent);
+        }
+        
+        .back-link i {
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .upload-container {
+                padding: 1.5rem;
+            }
+        }
+        
+        .selected-files {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+        
+        .selected-files h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        
+        .file-list {
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-item .file-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 80%;
+        }
+        
+        .file-item .remove-file {
+            color: var(--danger);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="upload-section">
+            <div class="upload-container">
+                <h3 class="upload-title">Upload Waste Images</h3>
+                
+               
+                            <div class="alert alert-{{ category }}">
+                               
+                            </div>
+   
+                
+                <form method="POST" action="{{ url_for('upload_waste_images') }}" enctype="multipart/form-data" id="uploadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date" class="form-label">Collection Date</label>
+                            <input type="date" name="date" id="date" class="form-control" required value="{{ today }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="canal" class="form-label">Canal Location</label>
+                            <select name="canal" id="canal" class="form-control" required>
+                                <option value="">Select Canal</option>
+                                <option value="Canal A">Canal A</option>
+                                <option value="Canal B">Canal B</option>
+                                <option value="Canal C">Canal C</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Waste Images</label>
+                        <div class="file-upload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag and drop files here or click to browse</p>
+                            <small>Supported formats: JPG, PNG, GIF (Max size: 10MB per file)</small>
+                            <input type="file" name="images" id="images" class="form-control" multiple required accept="image/*">
+                        </div>
+                        
+                        <div class="selected-files" id="selectedFiles">
+                            <h4>Selected Files</h4>
+                            <div class="file-list" id="fileList"></div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-upload"></i> Upload Images
+                    </button>
+                    
+                    <a href="{{ url_for('dashboard') }}" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </form>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // File upload interaction
+        const fileInput = document.getElementById('images');
+        const selectedFiles = document.getElementById('selectedFiles');
+        const fileList = document.getElementById('fileList');
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                selectedFiles.style.display = 'block';
+                fileList.innerHTML = '';
+                
+                for (let i = 0; i < this.files.length; i++) {
+                    const file = this.files[i];
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    
+                    const fileName = document.createElement('span');
+                    fileName.className = 'file-name';
+                    fileName.textContent = file.name;
+                    
+                    const fileSize = document.createElement('span');
+                    fileSize.className = 'file-size';
+                    fileSize.textContent = formatFileSize(file.size);
+                    
+                    fileItem.appendChild(fileName);
+                    fileItem.appendChild(fileSize);
+                    fileList.appendChild(fileItem);
+                }
+            } else {
+                selectedFiles.style.display = 'none';
+            }
+        });
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        }
+        
+        // Add form validation
+        const form = document.getElementById('uploadForm');
+        form.addEventListener('submit', function(event) {
+            const canal = document.getElementById('canal').value;
+            const files = document.getElementById('images').files;
+            
+            if (canal === '') {
+                event.preventDefault();
+                alert('Please select a canal location');
+            }
+            
+            if (files.length === 0) {
+                event.preventDefault();
+                alert('Please select at least one image file');
+            }
+        });
+    </script>
+</body>
+</html>
